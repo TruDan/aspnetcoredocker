@@ -7,6 +7,11 @@ ENV DOCKER_SHA256 05ceec7fd937e1416e5dce12b0b6e1c655907d349d52574319a1e875077ccb
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 6.7.0
 
+# Nodejs needs xz-utils for the untar operation
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  xz-utils \
+  && rm -rf /var/lib/apt/lists/*
+
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
   && for key in \
@@ -29,7 +34,7 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
-  && ln -s /usr/local/bin/node /usr/local/bin/nodejs
+  && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
   && curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
 
