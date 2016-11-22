@@ -1,11 +1,11 @@
-FROM microsoft/dotnet:1.0.0-preview2-sdk
+FROM microsoft/dotnet:latest
 
 ENV COMPOSE_VERSION 1.8.1
 ENV DOCKER_BUCKET get.docker.com
 ENV DOCKER_VERSION 1.12.1
 ENV DOCKER_SHA256 05ceec7fd937e1416e5dce12b0b6e1c655907d349d52574319a1e875077ccb79
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 6.7.0
+ENV NODE_VERSION 6.9.1
 
 # Nodejs needs xz-utils for the untar operation
 RUN apt-get update && apt-get install -y --no-install-recommends \
