@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:latest
+FROM mcr.microsoft.com/dotnet/core/sdk
 
 ENV COMPOSE_VERSION 1.8.1
 ENV DOCKER_BUCKET get.docker.com
@@ -10,6 +10,7 @@ ENV NODE_VERSION 8.12.0
 # Nodejs needs xz-utils for the untar operation
 RUN apt-get update && apt-get install -y --no-install-recommends \
   xz-utils \
+  apt-utils \
   && rm -rf /var/lib/apt/lists/*
 
 # gpg keys listed at https://github.com/nodejs/node
